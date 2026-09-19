@@ -13,8 +13,7 @@ const CORPORATE_LINKS = [
   { label: 'İletişim', href: '#contact' },
 ]
 
-/** No verified social handles were supplied — listed as plain labels rather than invented links. */
-const SOCIAL_LABELS = ['Instagram', 'LinkedIn', 'WhatsApp']
+const INSTAGRAM_URL = 'https://www.instagram.com/ninovapremium/'
 
 export function Footer() {
   return (
@@ -64,11 +63,14 @@ export function Footer() {
           <div className="md:col-span-2">
             <p className="text-[10px] tracking-[0.25em] uppercase text-[#9B9B9B] mb-5">Bağlantı</p>
             <div className="space-y-3">
-              {SOCIAL_LABELS.map((label) => (
-                <span key={label} className="block text-[13px] text-[#C0C0C0]">
-                  {label}
-                </span>
-              ))}
+              <a
+                href={INSTAGRAM_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block text-[13px] text-[#6B6B6B] hover:text-[#111111] transition-colors"
+              >
+                Instagram
+              </a>
             </div>
           </div>
         </div>
