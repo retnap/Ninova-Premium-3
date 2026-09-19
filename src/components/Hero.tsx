@@ -72,7 +72,7 @@ export function Hero() {
             <div>
               <p className="text-[9px] tracking-[0.3em] text-white/50 uppercase mb-1.5">Konut</p>
               <p className="text-[28px] md:text-[36px] font-body font-light text-white leading-none">
-                <CountUp to={200} duration={STATS_COUNT_DURATION} delay={DAIRE_COUNT_DELAY} />
+                <CountUp to={208} duration={STATS_COUNT_DURATION} delay={DAIRE_COUNT_DELAY} />
               </p>
               <p className="text-[10px] tracking-[0.15em] text-white/60 uppercase mt-1">Daire</p>
             </div>

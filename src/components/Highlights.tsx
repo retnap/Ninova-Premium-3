@@ -5,7 +5,7 @@ import { Reveal } from './Reveal'
 const STAT_STAGGER = 0.12
 
 const STATS = [
-  { value: 200, label: 'Daire' },
+  { value: 208, label: 'Daire' },
   { value: 35, label: 'Dükkan' },
   { text: '2+1', label: 'Daire Tipi' },
   { text: '3+1', label: 'Daire Tipi' },
