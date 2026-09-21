@@ -30,7 +30,7 @@ export function ContactCta() {
             Kataloğu İndir
           </a>
           <a
-            href="tel:02124270000"
+            href="tel:+905303575008"
             className="text-[11px] tracking-[0.25em] uppercase px-10 py-4 border border-[#E5E5E5] text-[#6B6B6B] hover:border-[#111111] hover:text-[#111111] transition-all duration-200"
           >
             İletişime Geç
