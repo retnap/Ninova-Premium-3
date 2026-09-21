@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://ninovainsaat.com/sitemap.xml
+Sitemap: https://ninovapremium.com/sitemap.xml

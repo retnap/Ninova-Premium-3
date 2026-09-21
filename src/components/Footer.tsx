@@ -24,18 +24,18 @@ export function Footer() {
             <img src={LOGO.full} alt="Ninova Premium" className="h-12 w-auto mb-6" />
             <p className="text-[10px] tracking-[0.15em] text-[#9B9B9B] uppercase mb-8">by Ninova İnşaat</p>
             <p className="text-[13px] text-[#6B6B6B] leading-[1.8]">
-              Bağlarbaşı Mah. Mutlu Sok. No: 2/8 Kat: 11
+              Fevzi Çakmak Mahallesi
               <br />
-              Ninova Life Sitesi
+              Gebzeli Caddesi 738B
               <br />
-              Gaziosmanpaşa / İstanbul
+              Ninova Premium Projesi
             </p>
             <div className="mt-6 space-y-2">
               <a href="mailto:info@ninovainsaat.com" className="block text-[13px] text-[#6B6B6B] hover:text-[#111111] transition-colors">
                 info@ninovainsaat.com
               </a>
-              <a href="tel:02124270000" className="block text-[13px] text-[#6B6B6B] hover:text-[#111111] transition-colors">
-                0 (212) 427 00 00
+              <a href="tel:+905303575008" className="block text-[13px] text-[#6B6B6B] hover:text-[#111111] transition-colors">
+                +90 530 357 50 08
               </a>
             </div>
           </div>
