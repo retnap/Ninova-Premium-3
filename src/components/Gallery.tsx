@@ -1,14 +1,21 @@
+import { AnimatePresence } from 'motion/react'
+import { useState } from 'react'
 import { GALLERY_ITEMS } from '../data/gallery'
 import { useCarousel } from '../hooks/useCarousel'
 import { CarouselNav } from './CarouselNav'
-import { ImageTrack } from './ImageTrack'
+import { GalleryLightbox } from './GalleryLightbox'
+import { ImageTrack, type TrackImage } from './ImageTrack'
 import { Label } from './Label'
 import { Reveal } from './Reveal'
+
+// Shared by the carousel and the lightbox so both read from a single mapping of the source data.
+const TRACK_IMAGES: TrackImage[] = GALLERY_ITEMS.map((item) => ({ src: item.img, alt: item.label }))
 
 export function Gallery() {
   const total = GALLERY_ITEMS.length
   const { index, setIndex, move: goToImage } = useCarousel(total)
   const active = GALLERY_ITEMS[index]
+  const [lightboxOpen, setLightboxOpen] = useState(false)
 
   return (
     <section id="gallery" className="bg-[#F8F8F7] py-24 md:py-36 overflow-hidden">
@@ -22,10 +29,11 @@ export function Gallery() {
 
         <Reveal>
           <ImageTrack
-            images={GALLERY_ITEMS.map((item) => ({ src: item.img, alt: item.label }))}
+            images={TRACK_IMAGES}
             index={index}
             onSwipe={goToImage}
             heightClassName="h-[52vh] min-h-[320px] md:h-[68vh] md:min-h-[480px]"
+            onActiveClick={() => setLightboxOpen(true)}
           />
           <CarouselNav onPrev={() => goToImage(-1)} onNext={() => goToImage(1)} current={index + 1} total={total} className="mt-8 mb-8" />
           <div className="flex items-center justify-between mb-8">
@@ -50,6 +58,12 @@ export function Gallery() {
           ))}
         </div>
       </div>
+
+      <AnimatePresence>
+        {lightboxOpen && (
+          <GalleryLightbox images={TRACK_IMAGES} index={index} onSelect={setIndex} onClose={() => setLightboxOpen(false)} />
+        )}
+      </AnimatePresence>
     </section>
   )
 }

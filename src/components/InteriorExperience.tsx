@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { INTERIOR_CATS } from '../data/interiorCategories'
 import { useCarousel } from '../hooks/useCarousel'
 import { CarouselNav } from './CarouselNav'
+import { GalleryLightbox } from './GalleryLightbox'
 import { ImageTrack } from './ImageTrack'
 import { Label } from './Label'
 import { Reveal } from './Reveal'
@@ -12,6 +13,7 @@ const CATEGORY_TRANSITION = { duration: 0.35, ease: [0.22, 1, 0.36, 1] as const 
 export function InteriorExperience() {
   const reduceMotion = useReducedMotion()
   const [activeCat, setActiveCat] = useState(0)
+  const [lightboxOpen, setLightboxOpen] = useState(false)
 
   const current = INTERIOR_CATS[activeCat]
   const { index: activeImg, setIndex: setActiveImg, move: goToImage } = useCarousel(current.images.length)
@@ -65,6 +67,7 @@ export function InteriorExperience() {
                 index={activeImg}
                 onSwipe={goToImage}
                 priority={activeCat === 0}
+                onActiveClick={() => setLightboxOpen(true)}
                 renderActiveOverlay={() => (
                   <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8 bg-gradient-to-t from-black/50 to-transparent pointer-events-none">
                     <p className="text-[13px] md:text-[15px] text-white/85 max-w-[440px] leading-[1.7]">{current.desc}</p>
@@ -82,6 +85,17 @@ export function InteriorExperience() {
           </AnimatePresence>
         </Reveal>
       </div>
+
+      <AnimatePresence>
+        {lightboxOpen && (
+          <GalleryLightbox
+            images={current.images}
+            index={activeImg}
+            onSelect={setActiveImg}
+            onClose={() => setLightboxOpen(false)}
+          />
+        )}
+      </AnimatePresence>
     </section>
   )
 }

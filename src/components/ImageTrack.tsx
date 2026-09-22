@@ -1,5 +1,5 @@
 import { AnimatePresence, motion, useReducedMotion, type PanInfo } from 'motion/react'
-import { useEffect, useRef, useState, type ReactNode } from 'react'
+import { useEffect, useRef, useState, type KeyboardEvent, type ReactNode } from 'react'
 
 export interface TrackImage {
   src: string
@@ -15,6 +15,8 @@ interface ImageTrackProps {
   priority?: boolean
   /** Rendered inside the active slot only (e.g. a caption overlay), moves/scales with it. */
   renderActiveOverlay?: (image: TrackImage) => ReactNode
+  /** When provided, makes the active slide clickable (e.g. to open a fullscreen lightbox). */
+  onActiveClick?: () => void
 }
 
 const SWIPE_THRESHOLD = 60
@@ -28,7 +30,15 @@ const SLIDE_TRANSITION = { duration: 0.6, ease: [0.22, 1, 0.36, 1] as const }
  * opacity and scale. Slots are keyed by image index so Motion interpolates
  * position/opacity/scale smoothly as the active index changes.
  */
-export function ImageTrack({ images, index, onSwipe, heightClassName, priority = false, renderActiveOverlay }: ImageTrackProps) {
+export function ImageTrack({
+  images,
+  index,
+  onSwipe,
+  heightClassName,
+  priority = false,
+  renderActiveOverlay,
+  onActiveClick,
+}: ImageTrackProps) {
   const reduceMotion = useReducedMotion()
   const containerRef = useRef<HTMLDivElement>(null)
   const [width, setWidth] = useState(0)
@@ -94,7 +104,21 @@ export function ImageTrack({ images, index, onSwipe, heightClassName, priority =
             <div
               className={`relative w-full h-full ${
                 slot.role === 'active' ? 'shadow-[0_30px_70px_-20px_rgba(0,0,0,0.35)]' : ''
-              }`}
+              } ${slot.role === 'active' && onActiveClick ? 'pointer-events-auto cursor-pointer' : ''}`}
+              {...(slot.role === 'active' && onActiveClick
+                ? {
+                    role: 'button' as const,
+                    tabIndex: 0,
+                    'aria-label': 'Görseli büyüt',
+                    onClick: onActiveClick,
+                    onKeyDown: (e: KeyboardEvent) => {
+                      if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault()
+                        onActiveClick()
+                      }
+                    },
+                  }
+                : {})}
             >
               <picture className="block w-full h-full select-none">
                 {slot.img.srcSm && <source media="(max-width: 768px)" srcSet={slot.img.srcSm} />}

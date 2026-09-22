@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { LOGO } from '../data/images'
 import { useScrolled } from '../hooks/useScrolled'
 
@@ -13,6 +13,58 @@ const NAV_LINKS = [
 export function Navbar() {
   const scrolled = useScrolled(60)
   const [menuOpen, setMenuOpen] = useState(false)
+  const panelRef = useRef<HTMLDivElement>(null)
+  const toggleRef = useRef<HTMLButtonElement>(null)
+
+  // Opening the menu pushes one history entry tagged `mobileMenu`, purely so a Back press while
+  // it's open can be intercepted (closed) instead of leaving the page — see the popstate effect.
+  function openMenu() {
+    window.history.pushState({ mobileMenu: true }, '')
+    setMenuOpen(true)
+  }
+
+  // For closes that aren't already navigating somewhere (toggle button, outside tap): pop the
+  // entry pushed on open so it never lingers in history.
+  const closeMenu = useCallback(() => {
+    setMenuOpen(false)
+    if (window.history.state?.mobileMenu) window.history.back()
+  }, [])
+
+  // For closes triggered by following a nav link: the link's default action is about to push its
+  // own entry for the target section, so instead of popping (which would race with that
+  // navigation) we just neutralize our marker in place before it happens.
+  function closeMenuForNavigation() {
+    setMenuOpen(false)
+    if (window.history.state?.mobileMenu) window.history.replaceState(null, '')
+  }
+
+  function toggleMenu() {
+    if (menuOpen) closeMenu()
+    else openMenu()
+  }
+
+  // Browser/device Back while the menu is open closes it instead of leaving the page — the Back
+  // press itself pops the entry pushed on open, so we only need to sync the UI state here.
+  useEffect(() => {
+    function handlePopState() {
+      if (menuOpen) setMenuOpen(false)
+    }
+    window.addEventListener('popstate', handlePopState)
+    return () => window.removeEventListener('popstate', handlePopState)
+  }, [menuOpen])
+
+  // Tapping outside the open panel (and outside the toggle button, which has its own handler)
+  // closes it. Attached only while open, so it's fully inert otherwise.
+  useEffect(() => {
+    if (!menuOpen) return
+    function handlePointerDown(e: PointerEvent) {
+      const target = e.target as Node
+      if (panelRef.current?.contains(target) || toggleRef.current?.contains(target)) return
+      closeMenu()
+    }
+    document.addEventListener('pointerdown', handlePointerDown)
+    return () => document.removeEventListener('pointerdown', handlePointerDown)
+  }, [menuOpen, closeMenu])
 
   return (
     <nav
@@ -55,9 +107,10 @@ export function Navbar() {
 
         {/* Mobile hamburger */}
         <button
+          ref={toggleRef}
           type="button"
           className={`md:hidden flex flex-col gap-1.5 ${scrolled ? 'text-[#111111]' : 'text-white'}`}
-          onClick={() => setMenuOpen((v) => !v)}
+          onClick={toggleMenu}
           aria-label="Menü"
           aria-expanded={menuOpen}
         >
@@ -68,12 +121,12 @@ export function Navbar() {
 
       {/* Mobile menu */}
       {menuOpen && (
-        <div className="md:hidden bg-white border-t border-[#E5E5E5] px-8 py-6 flex flex-col gap-5">
+        <div ref={panelRef} className="md:hidden bg-white border-t border-[#E5E5E5] px-8 py-6 flex flex-col gap-5">
           {NAV_LINKS.map((l) => (
             <a
               key={l.label}
               href={l.href}
-              onClick={() => setMenuOpen(false)}
+              onClick={closeMenuForNavigation}
               className="text-[11px] tracking-[0.25em] uppercase text-[#111111] hover:text-[#6B6B6B]"
             >
               {l.label}
@@ -81,7 +134,7 @@ export function Navbar() {
           ))}
           <a
             href="#contact"
-            onClick={() => setMenuOpen(false)}
+            onClick={closeMenuForNavigation}
             className="text-[11px] tracking-[0.25em] uppercase text-[#111111] border-t border-[#E5E5E5] pt-5 hover:text-[#6B6B6B]"
           >
             İletişim
