@@ -4,8 +4,9 @@ import { MaskedReveal } from './MaskedReveal'
 import { Reveal } from './Reveal'
 
 const METADATA = [
-  ['208', 'Daire'],
-  ['35', 'Dükkan'],
+  ['193', 'Daire'],
+  ['29', 'Dükkan'],
+  ['4', 'Kat Otopark'],
 ] as const
 
 export function ProjectIntro() {
@@ -31,7 +32,7 @@ export function ProjectIntro() {
               delay={0.25}
               className="text-[15px] md:text-[17px] text-[#6B6B6B] leading-[1.85] max-w-[560px]"
             >
-              Gaziosmanpaşa'nın kalbinde hayata geçen Ninova Premium, 208 daire ve 35 ticari ünit ile
+              Gaziosmanpaşa'nın kalbinde hayata geçen Ninova Premium, 193 daire ve 29 ticari ünit ile
               İstanbul'un sosyal ve ekonomik dönüşümüne doğrudan katkı sunan bir proje. Modern mimari
               anlayış, kaliteli malzeme seçimi ve işlevsel plan şemasıyla tasarlanan her daire, yaşam
               konforunu ve yatırım değerini bir arada sunar.

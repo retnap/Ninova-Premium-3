@@ -15,6 +15,7 @@ const STATS_BLOCK_DELAY = 0.55
 const STATS_COUNT_DURATION = 1.35
 const DAIRE_COUNT_DELAY = 0.75
 const DUKKAN_COUNT_DELAY = 0.9
+const OTOPARK_COUNT_DELAY = 1.05
 
 const fadeUpTransition = (delay: number) => ({ duration: 0.6, delay, ease: EASE_OUT })
 
@@ -72,16 +73,23 @@ export function Hero() {
             <div>
               <p className="text-[9px] tracking-[0.3em] text-white/50 uppercase mb-1.5">Konut</p>
               <p className="text-[28px] md:text-[36px] font-body font-light text-white leading-none">
-                <CountUp to={208} duration={STATS_COUNT_DURATION} delay={DAIRE_COUNT_DELAY} />
+                <CountUp to={193} duration={STATS_COUNT_DURATION} delay={DAIRE_COUNT_DELAY} />
               </p>
               <p className="text-[10px] tracking-[0.15em] text-white/60 uppercase mt-1">Daire</p>
             </div>
             <div>
               <p className="text-[9px] tracking-[0.3em] text-white/50 uppercase mb-1.5">Ticari</p>
               <p className="text-[28px] md:text-[36px] font-body font-light text-white leading-none">
-                <CountUp to={35} duration={STATS_COUNT_DURATION} delay={DUKKAN_COUNT_DELAY} />
+                <CountUp to={29} duration={STATS_COUNT_DURATION} delay={DUKKAN_COUNT_DELAY} />
               </p>
               <p className="text-[10px] tracking-[0.15em] text-white/60 uppercase mt-1">Dükkan</p>
+            </div>
+            <div>
+              <p className="text-[9px] tracking-[0.3em] text-white/50 uppercase mb-1.5">Otopark</p>
+              <p className="text-[28px] md:text-[36px] font-body font-light text-white leading-none">
+                <CountUp to={4} duration={STATS_COUNT_DURATION} delay={OTOPARK_COUNT_DELAY} />
+              </p>
+              <p className="text-[10px] tracking-[0.15em] text-white/60 uppercase mt-1">Kat</p>
             </div>
           </motion.div>
         </div>

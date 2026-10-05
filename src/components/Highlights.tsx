@@ -5,11 +5,12 @@ import { Reveal } from './Reveal'
 const STAT_STAGGER = 0.12
 
 const STATS = [
-  { value: 208, label: 'Daire' },
-  { value: 35, label: 'Dükkan' },
+  { value: 193, label: 'Daire' },
+  { value: 29, label: 'Dükkan' },
   { text: '2+1', label: 'Daire Tipi' },
   { text: '3+1', label: 'Daire Tipi' },
   { text: '7/24', label: 'Güvenlik' },
+  { value: 4, label: 'Kat Otopark' },
 ] as const
 
 const FEATURES = [
@@ -19,7 +20,7 @@ const FEATURES = [
   },
   {
     title: 'Ticari Canlılık',
-    body: 'Zemin kattaki 35 dükkan ile proje çevresine sosyal ve ekonomik bir dinamizm katmaktadır.',
+    body: 'Zemin kattaki 29 dükkan ile proje çevresine sosyal ve ekonomik bir dinamizm katmaktadır.',
   },
   {
     title: 'Yatırım Değeri',
@@ -34,7 +35,7 @@ export function Highlights() {
         <Label className="mb-20">Proje Özellikleri</Label>
 
         <Reveal>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-0 border-t border-[#E5E5E5]">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-0 border-t border-[#E5E5E5]">
             {STATS.map((item, i) => (
               <div
                 key={item.label + ('value' in item ? item.value : item.text)}
